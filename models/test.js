@@ -25,6 +25,11 @@ const Test = mongoose.model('Test', new mongoose.Schema({
         type: String,
         required: true,
         trim: true
+    },
+    correctAnswer: {
+        type : String,
+        required: false,
+        trim: true
     }
 }))
 

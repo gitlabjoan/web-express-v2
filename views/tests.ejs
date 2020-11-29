@@ -6,12 +6,13 @@
   <% tests.forEach(test => { %>
 
   <h3 class="title"><%= test.question %></h3>
-  <ul>
+  <ol>
       <li><%= test.answer1 %></li>
       <li><%= test.answer2 %></li>
       <li><%= test.answer3 %></li>
       <li><%= test.answer4 %></li>
-  </ul>
+      <li><%= test.correctAnswer %></li>
+  </ol>
   
   <% }) %>
   <% } else { %>
