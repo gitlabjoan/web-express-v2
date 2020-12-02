@@ -24,7 +24,7 @@ const User = mongoose.model('User',new mongoose.Schema( {
         trim: true,
         minlength: 7,
         validate(value){
-            if(value.toLowerCase().includes('password')){
+            if(value.includes('password')){
                 throw new Error('El password no debe contener password')
             }
         }
