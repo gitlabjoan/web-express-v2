@@ -68,6 +68,9 @@ app.get('/test/create', (req, res) => {
 app.get('/interfaz', (req, res) => {
   res.render('interfaz', { title: 'Interacción con el servidor' });
 });
+app.get('/createUsers', (req, res) => {
+  res.render('createUsers', { title: 'Interacción con el servidor' });
+});
 
 
 app.use(cors())
