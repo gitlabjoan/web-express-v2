@@ -3,7 +3,6 @@ const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
 
-const User = mongoose.model('User', userSchema)
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -41,15 +40,25 @@ const userSchema = new mongoose.Schema({
                 throw new Error('Edad debe ser un valor positivo')
             }
         }
-    }
+    },
+    tokens:[
+        {
+            toke:{
+                type: String,
+                required: true
+            }
+        }
+    ]
 })
+const User = mongoose.model('User', userSchema)
+
 userSchema.methods.generateAuthToken = async () =>{
     const user = this
     const token = await JsonWebTokenError.sign({_id: user._id.toString()},'secreto',{expireIn:'7 days'})
+    user.tokens = user.tokens.concat({token:token})
+    await user.save();
     return token;
 }
-
-
 
 userSchema.statics.findUserByCredentials = (email, password) =>{
     const user = await User.findOne({email:email});
@@ -62,8 +71,6 @@ userSchema.statics.findUserByCredentials = (email, password) =>{
     }
     return user;
 }
-
-
 userSchema.pre('save', async (next) => {
     const user = this
     if(user.isModified('password')){
