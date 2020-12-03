@@ -1,24 +1,28 @@
 const bcrypt = require('bcryptjs')
 
-const password ='1234'
-
-
+const password1 ='1234';
 
 const getHash = async (password) => {
     const hash =  await bcrypt.hash(password, 8);
     return hash;
 }
 
-getHash(password);
+const isRight = async (password1, password2) => {
+   
 
-const isRight = async (password) => {
-    const pass = await getHash(password)
-    const coincidencia = bcrypt.compare(password, pass)
+
+    const pass1 = await getHash(password1)
+    const pass2 = await getHash(password2)
+    console.log('pass1',pass1);
+    console.log('pass2',pass2);
+    const coincidencia = async(pass1, pass2) =>{
+        return await bcrypt.compare(pass1, pass2)
+    } 
 
     if (!coincidencia){
         console.log('COINCIDENCIA NO CORRECTA');
     }else{
-        console.log('COINCIDENCIA CORRECTA');
+        console.log('COINCIDENCIA  CORRECTA');
     }
 }
-console.log('is RIGHT?------', isRight('1234'));
+const password2 = '12234';
