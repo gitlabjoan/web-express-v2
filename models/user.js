@@ -41,12 +41,24 @@ const User = mongoose.model('User',new mongoose.Schema( {
         }
     }
 }) )
-/* 
+userSchema.statics.findUserByCredentials = (email, password) =>{
+    const user = await User.findOne({email:email});
+    if (!user){
+        throw new Error('Email o password no válidos');
+    }
+    const isOK = bcryptjs.compare(password, user.password)
+    if(!isOK){
+        throw new Error('Email o password no válido')
+    }
+    return user;
+}
+
+
 userSchema.pre('save', async (next) => {
     const user = this
     if(user.isModified('password')){
         user.password = await bcryptjs.hash(user.password, 8)
     }
-}) */
+})
 
 module.exports = User
