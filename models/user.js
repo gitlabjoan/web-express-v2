@@ -60,7 +60,7 @@ userSchema.methods.generateAuthToken = async () =>{
     return token;
 }
 
-userSchema.statics.findUserByCredentials = (email, password) =>{
+userSchema.statics.findUserByCredentials = async (email, password) =>{
     const user = await User.findOne({email:email});
     if (!user){
         throw new Error('Email o password no válidos');
